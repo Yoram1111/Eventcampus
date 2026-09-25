@@ -1,0 +1,17 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block title %}Événements de {{ mois }}/{{ annee }} - EventCampus{% endblock %}
+
+{% block content %}
+    <h1>Événements de {{ mois }}/{{ annee }}</h1>
+
+    <div class="row">
+        {% for evenement in evenements %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
+            </div>
+        {% else %}
+            <p>Aucun événement ce mois-ci.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
