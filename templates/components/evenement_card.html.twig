@@ -1,21 +1,10 @@
-<div class="card h-100 shadow-sm">
-    <img src="{{ asset('images/' ~ evenement.image) }}" class="card-img-top" alt="{{ evenement.titre }}"
-         style="height: 180px; object-fit: cover;">
+<div class="card">
+    <img src="{{ asset('images/' ~ evenement.image) }}" class="card-img-top" alt="{{ evenement.titre }}">
     <div class="card-body">
-        <span class="badge text-bg-secondary">{{ evenement.categorie|capitalize }}</span>
-        <h5 class="card-title mt-2">{{ evenement.titre }}</h5>
-        <p class="mb-1"><i class="bi bi-calendar"></i> {{ evenement.date_debut|date('d/m/Y à H:i') }}</p>
-        <p class="mb-2"><i class="bi bi-geo-alt"></i> {{ evenement.lieu }}</p>
-
-        {% if evenement.statut == 'annule' %}
-            <span class="badge text-bg-dark">Annulé</span>
-        {% elseif evenement.statut == 'complet' or evenement.places_disponibles <= 0 %}
-            <span class="badge text-bg-danger">Complet</span>
-        {% else %}
-            <span class="badge text-bg-success">{{ evenement.places_disponibles }} places restantes</span>
-        {% endif %}
-    </div>
-    <div class="card-footer bg-white">
-        <a href="{{ path('app_evenement_show', {id: evenement.id}) }}" class="btn btn-primary btn-sm">Voir le détail</a>
+        <b>{{ evenement.titre }}</b><br>
+        {{ evenement.date_debut|date('d/m/Y à H:i') }}<br>
+        {{ evenement.lieu }}<br>
+        {% include 'components/remplissage.html.twig' %}<br>
+        <a href="{{ path('app_evenement_show', {id: evenement.id}) }}">Voir le détail</a>
     </div>
 </div>

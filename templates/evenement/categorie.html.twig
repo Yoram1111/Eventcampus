@@ -3,21 +3,12 @@
 {% block title %}{{ categorie|capitalize }} - EventCampus{% endblock %}
 
 {% block content %}
-    <h1>Événements : {{ categorie|capitalize }}</h1>
-
-    <div class="mb-4">
-        <a href="{{ path('app_evenement_index') }}" class="btn btn-outline-primary btn-sm">Tous</a>
-        {% for cat in categories %}
-            <a href="{{ path('app_evenement_categorie', {categorie: cat}) }}"
-               class="btn btn-sm {{ cat == categorie ? 'btn-primary' : 'btn-outline-primary' }}">{{ cat|capitalize }}</a>
-        {% endfor %}
-    </div>
+    <h1>Catégorie : {{ categorie|capitalize }}</h1>
+    <p><a href="{{ path('app_evenement_index') }}">← Tous les événements</a></p>
 
     <div class="row">
         {% for evenement in evenements %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
-            </div>
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
         {% else %}
             <p>Aucun événement dans cette catégorie.</p>
         {% endfor %}

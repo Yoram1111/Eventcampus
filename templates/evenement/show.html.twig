@@ -3,33 +3,18 @@
 {% block title %}{{ evenement.titre }} - EventCampus{% endblock %}
 
 {% block content %}
-    <a href="{{ path('app_evenement_index') }}">← Retour à la liste</a>
+    <p><a href="{{ path('app_evenement_index') }}">← Tous les événements</a></p>
 
-    <div class="row mt-3">
-        <div class="col-md-6 mb-3">
-            <img src="{{ asset('images/' ~ evenement.image) }}" class="img-fluid rounded" alt="{{ evenement.titre }}">
-        </div>
-        <div class="col-md-6">
-            <h1>{{ evenement.titre }}</h1>
+    <h1>{{ evenement.titre }}</h1>
+    <img src="{{ asset('images/' ~ evenement.image) }}" width="400" alt="{{ evenement.titre }}">
 
-            {% if evenement.statut == 'annule' %}
-                <div class="alert alert-dark">Cet événement est annulé.</div>
-            {% elseif evenement.statut == 'complet' or evenement.places_disponibles <= 0 %}
-                <div class="alert alert-danger">Cet événement est complet.</div>
-            {% endif %}
-
-            <p>{{ evenement.description }}</p>
-
-            <ul class="list-group mb-3">
-                <li class="list-group-item"><strong>Catégorie :</strong> {{ evenement.categorie|capitalize }}</li>
-                <li class="list-group-item"><strong>Début :</strong> {{ evenement.date_debut|date('d/m/Y à H:i') }}</li>
-                <li class="list-group-item"><strong>Fin :</strong> {{ evenement.date_fin|date('d/m/Y à H:i') }}</li>
-                <li class="list-group-item"><strong>Lieu :</strong> {{ evenement.lieu }}</li>
-                <li class="list-group-item"><strong>Organisateur :</strong> {{ evenement.organisateur }}</li>
-                <li class="list-group-item"><strong>Prix :</strong> {{ evenement.prix == 0 ? 'Gratuit' : evenement.prix ~ ' €' }}</li>
-                <li class="list-group-item"><strong>Places :</strong> {{ evenement.places_disponibles }} disponibles sur {{ evenement.places_totales }}</li>
-                <li class="list-group-item"><strong>Statut :</strong> {{ evenement.statut }}</li>
-            </ul>
-        </div>
-    </div>
+    <p>{{ evenement.description }}</p>
+    <ul>
+        <li>Catégorie : {{ evenement.categorie }}</li>
+        <li>Du {{ evenement.date_debut|date('d/m/Y à H:i') }} au {{ evenement.date_fin|date('d/m/Y à H:i') }}</li>
+        <li>Lieu : {{ evenement.lieu }}</li>
+        <li>Organisateur : {{ evenement.organisateur }}</li>
+        <li>Prix : {{ evenement.prix == 0 ? 'Gratuit' : evenement.prix ~ ' €' }}</li>
+        <li>Places : {% include 'components/remplissage.html.twig' %}</li>
+    </ul>
 {% endblock %}

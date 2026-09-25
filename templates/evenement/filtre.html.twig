@@ -1,38 +1,30 @@
 {% extends 'layout/main.html.twig' %}
 
-{% block title %}Filtrer les événements{% endblock %}
+{% block title %}Filtrer - EventCampus{% endblock %}
 
 {% block content %}
     <h1>Filtrer les événements</h1>
 
-    <form method="get" action="{{ path('app_evenement_filtre') }}" class="row g-2 mb-4">
-        <div class="col-md-4">
-            <select name="categorie" class="form-select">
-                <option value="">Toutes les catégories</option>
-                {% for cat in categories %}
-                    <option value="{{ cat }}" {{ cat == categorie ? 'selected' }}>{{ cat|capitalize }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select name="acces" class="form-select">
-                <option value="">Gratuit et payant</option>
-                <option value="gratuit" {{ acces == 'gratuit' ? 'selected' }}>Gratuit</option>
-                <option value="payant" {{ acces == 'payant' ? 'selected' }}>Payant</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-        </div>
+    <form class="mb-4">
+        <select name="categorie">
+            <option value="">Toutes les catégories</option>
+            {% for cat in categories %}
+                <option value="{{ cat }}" {{ cat == categorie ? 'selected' }}>{{ cat }}</option>
+            {% endfor %}
+        </select>
+        <select name="acces">
+            <option value="">Gratuit et payant</option>
+            <option value="gratuit" {{ acces == 'gratuit' ? 'selected' }}>Gratuit</option>
+            <option value="payant" {{ acces == 'payant' ? 'selected' }}>Payant</option>
+        </select>
+        <button>Filtrer</button>
     </form>
 
     <p>{{ evenements|length }} événement(s) trouvé(s)</p>
 
     <div class="row">
         {% for evenement in evenements %}
-            <div class="col-md-4 mb-4">
-                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
-            </div>
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
         {% else %}
             <p>Aucun événement ne correspond.</p>
         {% endfor %}

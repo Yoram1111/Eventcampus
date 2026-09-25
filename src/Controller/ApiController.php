@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Service\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+
 final class ApiController extends AbstractController
 {
     private Store $store;
@@ -27,7 +28,8 @@ final class ApiController extends AbstractController
         }
         if ($acces !== null && !in_array($acces, ['gratuit', 'payant'])) {
             return new JsonResponse(['erreur' => "Accès inconnu : $acces (valeurs possibles : gratuit ou payant)"], 400);
-        }-
+        }
+
         $evenements = $this->store->getEvenements();
 
         if ($categorie !== null) {
@@ -48,8 +50,7 @@ final class ApiController extends AbstractController
             });
         }
 
-        return new JsonResponse(array_values($this->store->getEvenements()));
-        dd($categorie, $acces);
+        return new JsonResponse(array_values($evenements));
     }
 
 

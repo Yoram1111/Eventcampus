@@ -1,0 +1,13 @@
+{% set places_prises = evenement.places_totales - evenement.places_disponibles %}
+{% set pourcentage = evenement.places_totales > 0 ? (places_prises / evenement.places_totales * 100)|round : 0 %}
+
+{% if evenement.statut == 'annule' %}
+    Annulé
+{% elseif evenement.places_disponibles == 0 %}
+    Complet
+{% elseif pourcentage >= 90 %}
+    Presque complet
+{% else %}
+    Encore {{ evenement.places_disponibles }} places
+{% endif %}
+({{ pourcentage }} % rempli)

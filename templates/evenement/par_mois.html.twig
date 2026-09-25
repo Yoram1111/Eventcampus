@@ -4,12 +4,11 @@
 
 {% block content %}
     <h1>Événements de {{ mois }}/{{ annee }}</h1>
+    <p><a href="{{ path('app_evenement_index') }}">← Tous les événements</a></p>
 
     <div class="row">
         {% for evenement in evenements %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
-            </div>
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
         {% else %}
             <p>Aucun événement ce mois-ci.</p>
         {% endfor %}

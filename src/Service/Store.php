@@ -9,6 +9,7 @@ class Store
         return ['culturel', 'sportif', 'associatif', 'festif'];
     }
 
+
     public function getEvenements(): array
     {
         return [
@@ -164,4 +165,5 @@ class Store
             ],
         ];
     }
+
 }

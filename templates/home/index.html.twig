@@ -3,33 +3,13 @@
 {% block title %}Accueil - EventCampus{% endblock %}
 
 {% block content %}
-    <div class="p-4 mb-4 bg-light rounded-3">
-        <h1>Bienvenue sur EventCampus</h1>
-        <p class="lead">Tous les événements étudiants du campus, au même endroit.</p>
-        <a href="{{ path('app_evenement_index') }}" class="btn btn-primary">Voir tous les événements</a>
-    </div>
-
-    <div class="row text-center mb-4">
-        <div class="col-md-6 mb-3">
-            <div class="card"><div class="card-body">
-                <h2>{{ nb_evenements }}</h2>
-                <p class="mb-0">événements</p>
-            </div></div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <div class="card"><div class="card-body">
-                <h2>{{ nb_a_venir }}</h2>
-                <p class="mb-0">à venir</p>
-            </div></div>
-        </div>
-    </div>
+    <h1>Bienvenue sur EventCampus</h1>
+    <p>{{ nb_evenements }} événements, dont {{ nb_a_venir }} à venir.</p>
 
     <h2>Prochains événements</h2>
     <div class="row">
         {% for evenement in prochains %}
-            <div class="col-md-4 mb-4">
-                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
-            </div>
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
         {% else %}
             <p>Aucun événement à venir.</p>
         {% endfor %}

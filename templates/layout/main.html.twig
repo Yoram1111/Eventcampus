@@ -3,18 +3,31 @@
 {% block body %}
     {% include 'components/navigation.html.twig' %}
 
-    <main class="container my-4">
-        {% for type, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-                </div>
-            {% endfor %}
-        {% endfor %}
-
+    <main class="container">
         {% block content %}{% endblock %}
     </main>
 
     {% include 'components/footer.html.twig' %}
+
+    {% set flashes = app.flashes %}
+    {% if flashes is not empty %}
+        <div class="modal fade" id="popup">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Erreur</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% for messages in flashes %}
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>new bootstrap.Modal('#popup').show();</script>
+    {% endif %}
 {% endblock %}

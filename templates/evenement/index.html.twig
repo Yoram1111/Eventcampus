@@ -5,20 +5,16 @@
 {% block content %}
     <h1>Tous les événements</h1>
 
-    <div class="mb-4">
-        <a href="{{ path('app_evenement_index') }}" class="btn btn-primary btn-sm">Tous</a>
+    <p>
+        Catégories :
         {% for cat in categories %}
-            <a href="{{ path('app_evenement_categorie', {categorie: cat}) }}" class="btn btn-outline-primary btn-sm">{{ cat|capitalize }}</a>
+            <a href="{{ path('app_evenement_categorie', {categorie: cat}) }}">{{ cat }}</a>
         {% endfor %}
-    </div>
+    </p>
 
     <div class="row">
         {% for evenement in evenements %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                {% include 'components/evenement_card.html.twig' with { 'evenement': evenement } %}
-            </div>
-        {% else %}
-            <p>Aucun événement.</p>
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
         {% endfor %}
     </div>
 {% endblock %}

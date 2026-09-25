@@ -4,14 +4,11 @@
 
 {% block content %}
     <h1>Statistiques</h1>
-    <p class="lead">{{ total }} événements au total</p>
+    <p>{{ total }} événements au total.</p>
 
-    <h2 class="h4">Répartition par catégorie</h2>
-    {% for categorie, nombre in parCategorie %}
-        {% set pourcentage = total > 0 ? (nombre / total * 100)|round : 0 %}
-        <p class="mb-1">{{ categorie|capitalize }} : {{ nombre }}</p>
-        <div class="progress mb-3" role="progressbar">
-            <div class="progress-bar" style="width: {{ pourcentage }}%">{{ pourcentage }} %</div>
-        </div>
-    {% endfor %}
+    <ul>
+        {% for categorie, nombre in parCategorie %}
+            <li>{{ categorie }} : {{ nombre }} ({{ (nombre / total * 100)|round }} %)</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
