@@ -98,6 +98,14 @@ final class EvenementController extends AbstractController
             'categories' => $this->store->getCategories(),
         ]);
     }
+    #[Route('/evenements/recherche',name:'app_evenement_recherche', methods: ['GET'])]
+    public function recherche(Request $request): Response
+    {
+        $q = $request->query->get('q');
+        dd($q);
+
+    }
+
 
     #[Route('/evenements/{id}', name: 'app_evenement_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id): Response
