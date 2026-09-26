@@ -16,6 +16,7 @@ final class AccueilController extends AbstractController
         $this->store = $store;
     }
 
+    // Cahier des charges : accueil avec statistiques générales
     #[Route('/', name: 'app_accueil', methods: ['GET'])]
     public function index(): Response
     {
@@ -37,6 +38,7 @@ final class AccueilController extends AbstractController
         ]);
     }
 
+    // Cahier des charges : page de statistiques
     #[Route('/statistiques', name: 'app_statistiques', methods: ['GET'])]
     public function statistiques(): Response
     {

@@ -1,0 +1,16 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block title %}Événements de {{q}} } - EventCampus{% endblock %}
+
+{% block content %}
+    <h1>Événements de {{ q }}</h1>
+    <p><a href="{{ path('app_evenement_index') }}">← Tous les événements</a></p>
+
+    <div class="row">
+        {% for evenement in evenements %}
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
+        {% else %}
+            <p>Aucun resultat</p>
+        {% endfor %}
+    </div>
+{% endblock %}

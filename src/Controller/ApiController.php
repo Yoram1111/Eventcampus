@@ -17,6 +17,7 @@ final class ApiController extends AbstractController
         $this->store = $store;
     }
 
+    // Cahier des charges : API de tous les événements + Sujet 2 : filtres ?categorie= et ?acces=
     #[Route('/api/evenements', name: 'api_evenements', methods: ['GET'])]
     public function index(Request $request): JsonResponse
     {
@@ -54,6 +55,7 @@ final class ApiController extends AbstractController
     }
 
 
+    // Cahier des charges : API d'un événement
     #[Route('/api/evenements/{id}', name: 'api_evenement_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id): JsonResponse
     {

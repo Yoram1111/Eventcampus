@@ -1,3 +1,4 @@
+{# Bonus : page HTML du filtre (même logique que le sujet 2) #}
 {% extends 'layout/main.html.twig' %}
 
 {% block title %}Filtrer - EventCampus{% endblock %}
@@ -5,7 +6,7 @@
 {% block content %}
     <h1>Filtrer les événements</h1>
 
-    <form class="mb-4">
+    <form>
         <select name="categorie">
             <option value="">Toutes les catégories</option>
             {% for cat in categories %}
@@ -20,13 +21,12 @@
         <button>Filtrer</button>
     </form>
 
-    <p>{{ evenements|length }} événement(s) trouvé(s)</p>
-
-    <div class="row">
+    <p>{{ evenements|length }} événement(s)</p>
+    <ul>
         {% for evenement in evenements %}
-            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
+            <li><a href="{{ path('app_evenement_show', {id: evenement.id}) }}">{{ evenement.titre }}</a> – {{ evenement.prix == 0 ? 'Gratuit' : evenement.prix ~ ' €' }}</li>
         {% else %}
-            <p>Aucun événement ne correspond.</p>
+            <li>Aucun événement ne correspond.</li>
         {% endfor %}
-    </div>
+    </ul>
 {% endblock %}

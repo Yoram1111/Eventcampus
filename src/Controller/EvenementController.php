@@ -17,6 +17,7 @@ final class EvenementController extends AbstractController
         $this->store = $store;
     }
 
+    // Cahier des charges : liste de tous les événements
     #[Route('/evenements', name: 'app_evenement_index', methods: ['GET'])]
     public function index(): Response
     {
@@ -26,6 +27,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
+    // Cahier des charges : filtre par catégorie
     #[Route('/evenements/categorie/{categorie}', name: 'app_evenement_categorie', requirements: ['categorie' => '[a-z]+'], methods: ['GET'])]
     public function categorie(string $categorie): Response
     {
@@ -44,6 +46,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
+    // Sujet 1 : événements d'un mois
     #[Route('/evenements/par-mois/{annee}/{mois}', name: 'app_evenement_par_mois', requirements: ['annee' => '\d{4}', 'mois' => '\d{1,2}'], methods: ['GET'])]
     public function parMois(int $annee, int $mois): Response
     {
@@ -65,6 +68,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
+    // Bonus : page HTML du filtre catégorie + gratuit/payant (même logique que le sujet 2)
     #[Route('/evenements/filtre', name: 'app_evenement_filtre', methods: ['GET'])]
     public function filtre(Request $request): Response
     {
@@ -98,15 +102,31 @@ final class EvenementController extends AbstractController
             'categories' => $this->store->getCategories(),
         ]);
     }
+    // Sujet A : recherche par mot-clé
     #[Route('/evenements/recherche',name:'app_evenement_recherche', methods: ['GET'])]
     public function recherche(Request $request): Response
     {
         $q = $request->query->get('q');
-        dd($q);
+        if (!$q) {
+            $this->addFlash('danger', "La recherche est vide.");
+            return $this->redirectToRoute('app_evenement_index');
+        }
+
+        $evenements = array_filter($this->store->getEvenements(), function ($e) use ($q) {
+            return stripos($e['titre'], $q) !== false;
+        });
+
+
+        return $this->render('evenement/recherche.html.twig', [
+            'evenements' => $evenements,
+            'q' => $q,
+
+        ]);
 
     }
 
 
+    // Cahier des charges : détail d'un événement
     #[Route('/evenements/{id}', name: 'app_evenement_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id): Response
     {

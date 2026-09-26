@@ -1,3 +1,4 @@
+{# Sujet 3 : pourcentage de remplissage et message (inclus dans la carte et la page détail) #}
 {% set places_prises = evenement.places_totales - evenement.places_disponibles %}
 {% set pourcentage = evenement.places_totales > 0 ? (places_prises / evenement.places_totales * 100)|round : 0 %}
 
