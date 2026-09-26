@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Store;
+use SebastianBergmann\CodeCoverage\Report\Html\ClassView\Node\ParentSection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
-    // Cahier des charges : filtre par catégorie
+    // Cahier des charges : POUR FILTER PAR CATEGORIES
     #[Route('/evenements/categorie/{categorie}', name: 'app_evenement_categorie', requirements: ['categorie' => '[a-z]+'], methods: ['GET'])]
     public function categorie(string $categorie): Response
     {
@@ -46,7 +47,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
-    // Sujet 1 : événements d'un mois
+    // Sujet 1 : POUR FILTRER LES EVENEMENTS PAR MOIS
     #[Route('/evenements/par-mois/{annee}/{mois}', name: 'app_evenement_par_mois', requirements: ['annee' => '\d{4}', 'mois' => '\d{1,2}'], methods: ['GET'])]
     public function parMois(int $annee, int $mois): Response
     {
@@ -102,7 +103,7 @@ final class EvenementController extends AbstractController
             'categories' => $this->store->getCategories(),
         ]);
     }
-    // Sujet A : recherche par mot-clé
+    // Sujet A : RECHERCHER UN EVENEMENTS PAR SON NOM
     #[Route('/evenements/recherche',name:'app_evenement_recherche', methods: ['GET'])]
     public function recherche(Request $request): Response
     {
@@ -123,6 +124,43 @@ final class EvenementController extends AbstractController
 
         ]);
 
+    }
+
+    //SUJET B: TRIER LES EVENEMENT PAR RAPORT A SI IL SONT PASSES OU NON
+    #[Route('/evenements/a-venir',name:'app_evenement_a_venir', methods: ['GET'])]
+    public function a_Venir(): Response
+    {
+        $maintenant = date('Y-m-d H:i:s');
+        $evenements = $this->store->getEvenements();
+
+        $a_Venir = array_filter($evenements, function ($e) use ($maintenant) {
+            return $e['date_debut'] >= $maintenant;
+        });
+
+        usort($a_Venir, function ($a, $b) {
+            return strcmp($a['date_debut'], $b['date_debut']);
+        });
+        return $this->render('evenement/a_venir.html.twig', [
+            'evenements' => $a_Venir,
+        ]);
+
+    }
+    #[Route('/evenements/passes',name:'app_evenements_passes', methods: ['GET'])]
+    public function passes(): Response
+    {
+        $maintenant = date('Y-m-d H:i:s');
+        $evenements = $this->store->getEvenements();
+
+        $passes = array_filter($evenements, function ($e) use ($maintenant) {
+            return $e['date_debut'] < $maintenant;
+        });
+        usort($passes, function ($a, $b) {
+            return strcmp($a['date_debut'], $b['date_debut']);
+        });
+
+        return $this->render('evenement/passes.html.twig', [
+            'evenements' => $passes,
+        ]);
     }
 
 

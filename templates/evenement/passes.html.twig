@@ -1,0 +1,16 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block title %}Événements passés - EventCampus{% endblock %}
+
+{% block content %}
+    <h1>Événements passés</h1>
+    <p><a href="{{ path('app_evenement_index') }}">← Tous les événements</a></p>
+
+    <div class="row">
+        {% for evenement in evenements %}
+            <div class="col-md-4 mb-4">{% include 'components/evenement_card.html.twig' %}</div>
+        {% else %}
+            <p>La liste est vide</p>
+        {% endfor %}
+    </div>
+{% endblock %}
